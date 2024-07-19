@@ -1,10 +1,11 @@
+`include "ALU.v"
 module tb_ALU();
 
 reg [31:0] ScrA;
 reg [31:0] ScrB;
 reg [2:0] AluControl;
-reg zero;
-reg [31:0] ALUResult;
+wire zero;
+wire [31:0] ALUResult;
 
 ALU DUT (
     .ScrA(ScrA),
@@ -61,8 +62,6 @@ initial begin
     ScrB = 16'b0000000000000010;
     AluControl = 3'b111;
     #10;
-
-$stop;
 end
 
 endmodule

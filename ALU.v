@@ -1,11 +1,9 @@
-module ALU (ScrA,ScrB,AluControl,zero,ALUResult);
-
-input [width-1:0] ScrA,ScrB;
-input [2:0] AluControl;
-output zero;
-output [width-1:0] ALUResult;                        // how many bit in the result?
-
-parameter width =32;
+module ALU #(parameter width = 32)(
+  input wire[width-1 : 0]ScrA,ScrB,
+  input wire[2 : 0]AluControl,
+  output wire zero,
+  output reg[width-1 : 0] ALUResult
+  );
 
 always @(*) begin
 case(AluControl)
@@ -19,7 +17,7 @@ case(AluControl)
 		    ALUResult<= 32'b0;
    default: ALUResult <=32'b0;
 endcase
-					
 end
+assign zero = ! (|ALUResult);
 endmodule		 
 	  
