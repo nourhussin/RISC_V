@@ -8,7 +8,7 @@ module MainDecoder
 	always @(*)
 	begin
 		case (op)
-			7'b0000011:                             //lw indtruction
+			7'b0000011:                             //lw istruction
 			begin
 				RegWrite = 1'b1;
 				ImmSrc = 2'b00;
@@ -20,7 +20,7 @@ module MainDecoder
 				Jump = 1'b0;
 			end
 			
-			7'b0100011:                             //sw indtruction
+			7'b0100011:                             //sw instruction
 			begin
 				RegWrite = 1'b0;
 				ImmSrc = 2'b01;
@@ -32,7 +32,7 @@ module MainDecoder
 				Jump = 1'b0;
 			end
 			
-			7'b0110011:                             //R-type indtruction
+			7'b0110011:                             //R-type instruction
 			begin
 				RegWrite = 1'b1;
 				ImmSrc = 2'bxx;
@@ -44,7 +44,7 @@ module MainDecoder
 				Jump = 1'b0;
 			end
 			
-			7'b1100011:                             //beq indtruction
+			7'b1100011:                             //B-type instruction
 			begin
 				RegWrite = 1'b0;
 				ImmSrc = 2'b10;
@@ -56,7 +56,7 @@ module MainDecoder
 				Jump = 1'b0;
 			end
 			
-			7'b0010011:                             //I-type ALU indtruction
+			7'b0010011:                             //I-type ALU instruction
 			begin
 				RegWrite = 1'b1;
 				ImmSrc = 2'b00;
@@ -68,7 +68,7 @@ module MainDecoder
 				Jump = 1'b0;
 			end
 			
-			7'b1101111:                             //jal indtruction
+			7'b1101111:                             //jal instruction
 			begin
 				RegWrite = 1'b1;
 				ImmSrc = 2'b11;
@@ -77,6 +77,18 @@ module MainDecoder
 				ResultSrc = 2'b10;
 				Branch = 1'b0;
 				ALUOp = 2'bxx;
+				Jump = 1'b1;
+			end
+		
+			7'b1100111:                             //jalr instruction
+			begin
+				RegWrite = 1'b1;
+				ImmSrc = 2'b00;
+				ALUSrc = 1'b1;
+				MemWrite = 1'b0;
+				ResultSrc = 2'b10;
+				Branch = 1'b0;
+				ALUOp = 2'b00;
 				Jump = 1'b1;
 			end
 			
@@ -95,3 +107,5 @@ module MainDecoder
 	end
 	
 endmodule
+
+
