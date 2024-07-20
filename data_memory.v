@@ -12,13 +12,15 @@ always @(posedge clk)
   begin
   if (memwrite)
       begin
-		mem[ALUResult]<=write_data;
+      mem[ALUResult]<=write_data;
   end
-  
+  end
+always @(*)
+ begin
   
   if (!memwrite)
       begin
-	   read_data <= mem[ALUResult];
+	 read_data <= mem[ALUResult];
 	end	
 
   end
