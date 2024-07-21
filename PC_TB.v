@@ -1,4 +1,4 @@
-`timescale 1ns/1ps                      // to define the clock step and clock precision
+`include "PC.v"
 module PC_TB;
 	
 	parameter width = 32;
@@ -9,7 +9,7 @@ module PC_TB;
 	wire [width-1:0] PC_TB;
 	
 	//generate clock
-	always #5 clk_TB = ~clk_TB;         // we assume that the period is 10 ns
+	always#5 clk_TB = ~clk_TB;         // we assume that the period is 10 ns
 	
 	//instantiation
 	PC #(.width(width)) DUT
@@ -26,7 +26,7 @@ module PC_TB;
 		//initialization
 		clk_TB = 1'b0;
 		reset_n_TB = 1'b1;
-		PCNext_TB = 0;
+		PCNext_TB = 20;
 		
 		//reseting the PC
 		#10

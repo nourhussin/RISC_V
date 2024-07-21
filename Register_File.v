@@ -12,16 +12,12 @@ module Register_File#(parameter width = 32, registers = 32)(
     assign RD1 = memory[A1];
     assign RD2 = memory[A2];
 
+    
     always@(posedge clk)
     begin
-        if(WE3)
+        memory[0] <= 0;
+        if(WE3 && A3) // Never write in X0
             memory[A3] <= WD3;
     end
 
-    // Initialize the register file 
-    integer iterator;
-    initial begin
-        for(iterator = 0; iterator < 32; iterator = iterator + 1)
-        memory[iterator] = 32'h0;
-    end
 endmodule

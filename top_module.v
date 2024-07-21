@@ -10,8 +10,8 @@ module top_module #(parameter width = 32)(
 
     );
 
-    wire ALUSrc, RegWrite, PCSrc, Zero;
-    wire [1 : 0] ResultSrc, ImmSrc;
+    wire ALUSrc, RegWrite, Zero;
+    wire [1 : 0] ResultSrc, ImmSrc ,PCSrc;
     wire [2 : 0] ALUControl;
 
     ControlUnit CU(

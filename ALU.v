@@ -7,15 +7,15 @@ module ALU #(parameter width = 32)(
 
 always @(*) begin
 case(AlUControl)
-  3'b010: ALUResult <= SrcA & SrcB ;                
-  3'b011: ALUResult <= SrcA | SrcB ;
-  3'b000: ALUResult <= SrcA + SrcB ;			 	 
-  3'b001: ALUResult <= SrcA - SrcB ;	
+  3'b010: ALUResult = SrcA & SrcB ;                
+  3'b011: ALUResult = SrcA | SrcB ;
+  3'b000: ALUResult = SrcA + SrcB ;			 	 
+  3'b001: ALUResult = SrcA - SrcB ;	
   3'b101: if (SrcA <SrcB) begin
-		ALUResult<=32'b0000_0000_0000_0001;
+		ALUResult = 32'b0000_0000_0000_0001;
 		end else
-		    ALUResult<= 32'b0;
-   default: ALUResult <=32'b0;
+		    ALUResult = 32'b0;
+   default: ALUResult = 32'b0;
 endcase
 end
 assign Zero = ! (|ALUResult);

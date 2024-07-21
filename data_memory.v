@@ -1,27 +1,24 @@
-module	data_memory(
+module data_memory #(parameter width = 32, depth = 128)(//4KB
 input wire clk,
-input wire [31:0] ALUResult,
-input wire memwrite,
-input wire [31:0] write_data,
-output reg [31:0] read_data );
+input wire [$clog2(depth)-1:0] A,
+input wire WE,
+input wire [width-1:0] WD,
+output reg [width-1:0] RD );
   
-reg [31:0] mem [0:127];
+reg [width-1:0] mem [depth-1:0];
 
 //-----------------main code------------------
 always @(posedge clk)
   begin
-  if (memwrite)
-      begin
-      mem[ALUResult]<=write_data;
+  if (WE)
+  begin
+      mem[A] <= WD;
   end
   end
-always @(*)
- begin
-  
-  if (!memwrite)
-      begin
-	 read_data <= mem[ALUResult];
-	end	
 
+always @(*)
+  begin
+  if(!WE)
+    RD = mem[A];
   end
 endmodule

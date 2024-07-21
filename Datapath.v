@@ -8,8 +8,8 @@
 `include "Register_File.v"
 
 module Datapath #(parameter width = 32)(
-    input wire clk, reset_n, PCSrc, ALUSrc, RegWrite, // we may need to add 1 bit in RegWrite
-    input wire [1 : 0] ResultSrc, ImmSrc,
+    input wire clk, reset_n, ALUSrc, RegWrite, // we may need to add 1 bit in RegWrite
+    input wire [1 : 0] ResultSrc, ImmSrc, PCSrc,
     input wire [2 : 0] ALUControl,
     input wire [width-1 : 0] Instr, ReadData,
 
@@ -22,7 +22,7 @@ module Datapath #(parameter width = 32)(
     //--------------------PC----------------------------
     PC pcreg (
         .clk(clk),
-        .reset_n(reset),
+        .reset_n(reset_n),
         .PC(PC),
         .PCNext(PCNext)
     );
@@ -35,9 +35,10 @@ module Datapath #(parameter width = 32)(
         .ImmExt(ImmExt),
         .PCTarget(PCTarget)
     );
-    mux pc_src (
+    mux3 pc_src (
         .data1(PCPlus4),
         .data2(PCTarget),
+        .data3(ALUResult),
         .selector(PCSrc),
         .out_data(PCNext)
     );

@@ -1,16 +1,18 @@
+`include "MainDecoder.v"
+`include "ALU_Decoder.v"
 module ControlUnit
 (
 	input wire [6:0] op,                      //connected with Instr [6:0] in the top
 	input wire [2:0] funct3,                   //connected with Instr [14:12] in the top
 	input wire funct7_5,                       //connected with Instr [30] in the top
 	input wire Zero,                               //output from ALU module 
-	output wire PCSrc,MemWrite,ALUSrc,RegWrite,
-	output wire [1:0] ImmSrc,ResultSrc,
+	output wire MemWrite,ALUSrc,RegWrite,
+	output wire [1:0] ImmSrc,ResultSrc,PCSrc,
 	output wire [2:0] ALUControl
 );
 
-	wire Branch,Jump;
-	wire [1:0] ALUOp;
+	wire Branch;
+	wire [1:0] ALUOp,Jump;
 	
 	MainDecoder B0
 	(
@@ -34,7 +36,8 @@ module ControlUnit
 	.ALUControl(ALUControl)
 	);
 	
-	assign PCSrc = ((Zero & Branch) | Jump);
+	assign PCSrc[0] = ((Zero & Branch) | Jump[0]);
+	assign PCSrc[1] = Jump[1];
 
 
 endmodule

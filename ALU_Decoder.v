@@ -9,7 +9,7 @@ module ALU_Decoder
 
 	always @(*)
 	begin
-		case ({ALUOp,funct3,op5,funct7_5})
+		casex ({ALUOp,funct3,op5,funct7_5})
 		7'b00_010_0_x: ALUControl = 3'b000;                              //lw instruction
 		7'b00_010_1_x: ALUControl = 3'b000;                              //sw instruction
 		7'b10_000_0_x: ALUControl = 3'b000;                              //addi

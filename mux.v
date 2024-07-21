@@ -8,8 +8,8 @@ module mux #(parameter width = 32)(
 always @(*)
 begin 
   if (selector) begin
-      out_data <= data2;
+      out_data = data2;
   end else 
-      out_data <= data1; 
+      out_data = data1; 
 end
 endmodule		
