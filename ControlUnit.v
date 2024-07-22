@@ -36,7 +36,10 @@ module ControlUnit
 	.ALUControl(ALUControl)
 	);
 	
-	assign PCSrc[0] = ((Zero & Branch) | Jump[0]);
+	assign PCSrc[0] = (((funct3 == 3'b000) & Zero & Branch) |
+					   ((funct3 == 3'b001) & !Zero & Branch) |
+					   	Jump[0]);
+
 	assign PCSrc[1] = Jump[1];
 
 

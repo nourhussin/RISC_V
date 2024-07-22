@@ -6,7 +6,7 @@ module ALU_Decoder
 	input wire [1:0] ALUOp,
 	output reg [2:0] ALUControl
 );
-
+	//This module needs updates :)
 	always @(*)
 	begin
 		casex ({ALUOp,funct3,op5,funct7_5})
@@ -21,8 +21,6 @@ module ALU_Decoder
 		7'b10_111_1_0: ALUControl = 3'b010;                              //and
 		7'b01_000_1_x: ALUControl = 3'b001;                              //beq
 		7'b01_001_1_x: ALUControl = 3'b001;                              //bne
-		7'bxx_xxx_1_x: ALUControl = 3'b000;                              //jal
-		7'b10_000_1_x: ALUControl = 3'b000;                              //jalr
 		default: ALUControl = 3'bxxx;                  
 		endcase
 	end
