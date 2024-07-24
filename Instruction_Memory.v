@@ -11,7 +11,7 @@ module Instruction_Memory#(parameter depth = 256, width = 32)(
     // Upload the program code here
      
     initial begin
-    /*    memory[0] = 32'h00500113;	//addi x2 x0 5	 x2 = 5                     0           00500113
+        memory[0] = 32'h00500113;	//addi x2 x0 5	 x2 = 5                     0           00500113
         memory[1] = 32'h00c00193;	//addi x3 x0 12	 x3 = 12                    4           00C00193
         memory[2] = 32'hff718393;	//addi x7 x3 -9	 x7 = (12 - 9) = 3          8           FF718393
         memory[3] = 32'h0023e233;	//or x4 x7 x2	 x4 = (3 OR 5) = 7          C           0023E233
@@ -32,7 +32,7 @@ module Instruction_Memory#(parameter depth = 256, width = 32)(
         memory[18] = 32'h00910133;	//add x2 x2 x9	 x2 = (7 + 18) = 25         48          00910133
         memory[19] = 32'h0221a023;	//sw x2 32(x3)	 [100] = 25                 4C          0221A023
         memory[20] = 32'h00210063;	//beq x2 x2 0	 infinite loop              50          00210063
-     */
+    /*
     memory[0]  = 32'h00500113;  // addi x2, x0, 5     x2 = 5                     0x00000000
     memory[1]  = 32'h00c00193;  // addi x3, x0, 12    x3 = 12                    0x00000004
     memory[2]  = 32'hff718393;  // addi x7, x3, -9    x7 = (12 - 9) = 3          0x00000008
@@ -52,6 +52,18 @@ module Instruction_Memory#(parameter depth = 256, width = 32)(
     memory[16] = 32'h00910133;  // add x2, x2, x9     x2 = (2 + 2) = 4           0x00000040
     memory[17] = 32'h0221a023;  // sw x2, 0x20(x3)    [92] = 4                   0x00000044 (testcase2)
     memory[18] = 32'h00210063;  // beq x2, x2, done   infinite loop              0x00000048
-            
+       
+    memory[0] = 32'h00100020;  // addi x1,x0,10
+    memory[1] = 32'h00500113;  // addi x2,x0,5
+    memory[2] = 32'h01000033 ; // add x3,x1,x2
+    memory[3] = 32'h01400033 ; // sub x3,x1,x2 
+    memory[4] = 32'h01100033 ; // and x3,x1,x2
+    memory[5] = 32'h01300033 ; // or x3,x1,x2
+    memory[6] = 32'h30100022 ; // andi x2,x1, 'b1010
+    memory[7] = 32'h30500022 ; // ori x2,x1, 'b0100  
+    memory[8] = 32'h00a20023 ; // sw x2,0(x1)
+    memory[9] = 32'h00820022 ; // lw x2,0(x1)
+    memory[10] = 32'h000000ef ; // jalr x0,x1,0 
+    */
     end
 endmodule

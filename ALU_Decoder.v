@@ -6,23 +6,29 @@ module ALU_Decoder
 	input wire [1:0] ALUOp,
 	output reg [2:0] ALUControl
 );
-	//This module needs updates :)
-	always @(*)
-	begin
-		casex ({ALUOp,funct3,op5,funct7_5})
-		7'b00_010_0_x: ALUControl = 3'b000;                              //lw instruction
-		7'b00_010_1_x: ALUControl = 3'b000;                              //sw instruction
-		7'b10_000_0_x: ALUControl = 3'b000;                              //addi
-		7'b10_110_0_x: ALUControl = 3'b011;                              //ori
-		7'b10_111_0_x: ALUControl = 3'b010;                              //andi
-		7'b10_000_1_0: ALUControl = 3'b000;                              //add
-		7'b10_000_1_1: ALUControl = 3'b001;                              //sub
-		7'b10_110_1_0: ALUControl = 3'b011;                              //or
-		7'b10_111_1_0: ALUControl = 3'b010;                              //and
-		7'b01_000_1_x: ALUControl = 3'b001;                              //beq
-		7'b01_001_1_x: ALUControl = 3'b001;                              //bne
-		default: ALUControl = 3'bxxx;                  
+always@*
+begin
+
+case(ALUOp)
+	2'b00:ALUControl=3'b000;///lw,sw
+	2'b01:ALUControl=3'b001;///beq
+	2'b10:
+		begin
+		case(funct3)
+			3'b000:
+			begin
+				if({op5,funct7_5}==2'b11)
+				ALUControl=3'b001;//sub
+				else 
+				ALUControl=3'b000;//add
+			end
+			3'b010:ALUControl=3'b101;//slt
+			3'b110:ALUControl=3'b011;//or
+			3'b111:ALUControl=3'b010;//and
+			default:ALUControl=3'b000;
 		endcase
-	end
-	
+		end
+	default:ALUControl=3'b000;
+endcase
+end
 endmodule

@@ -26,7 +26,7 @@ module MainDecoder
 				ImmSrc = 2'b01;
 				ALUSrc = 1'b1;
 				MemWrite = 1'b1;
-				ResultSrc = 2'bxx;
+				ResultSrc = 2'b00;
 				Branch = 1'b0;
 				ALUOp = 2'b00;
 				Jump = 2'b00;
@@ -35,7 +35,7 @@ module MainDecoder
 			7'b0110011:                             //R-type instruction
 			begin
 				RegWrite = 1'b1;
-				ImmSrc = 2'bxx;
+				ImmSrc = 2'b00;
 				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
 				ResultSrc = 2'b00;
@@ -50,7 +50,7 @@ module MainDecoder
 				ImmSrc = 2'b10;
 				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
-				ResultSrc = 2'bxx;
+				ResultSrc = 2'b00;
 				Branch = 1'b1;
 				ALUOp = 2'b01;
 				Jump = 2'b00;
@@ -72,11 +72,11 @@ module MainDecoder
 			begin
 				RegWrite = 1'b1;
 				ImmSrc = 2'b11;
-				ALUSrc = 1'bx;
+				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
 				ResultSrc = 2'b10;
 				Branch = 1'b0;
-				ALUOp = 2'bxx;
+				ALUOp = 2'b00;
 				Jump = 2'b01;
 			end
 		
