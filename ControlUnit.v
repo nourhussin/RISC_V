@@ -1,5 +1,3 @@
-`include "MainDecoder.v"
-`include "ALU_Decoder.v"
 module ControlUnit
 (
 	input wire [6:0] op,                      //connected with Instr [6:0] in the top
