@@ -5,7 +5,7 @@ module top_module #(parameter width = 32)(
     input wire clk, reset_n,
     input wire [width-1 : 0] Instr, ReadData,
 
-    output wire MemWrite,
+    output wire MemWrite,MemRead,
     output wire [width-1 : 0] PC, ALUResult, WriteData
 
     );
@@ -25,6 +25,7 @@ module top_module #(parameter width = 32)(
         .ALUSrc(ALUSrc),
         .RegWrite(RegWrite),
         .MemWrite(MemWrite),
+        .MemRead(MemRead),
         .PCSrc(PCSrc)
     );
 

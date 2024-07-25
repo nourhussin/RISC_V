@@ -1,7 +1,7 @@
 module MainDecoder
 (
 	input wire [6:0] op,
-	output reg Branch,MemWrite,ALUSrc,RegWrite,
+	output reg Branch,MemWrite,MemRead,ALUSrc,RegWrite,
 	output reg [1:0] ImmSrc,ALUOp,ResultSrc,Jump
 );
 
@@ -14,6 +14,7 @@ module MainDecoder
 				ImmSrc = 2'b00;
 				ALUSrc = 1'b1;
 				MemWrite = 1'b0;
+				MemRead = 1'b1;
 				ResultSrc = 2'b01;
 				Branch = 1'b0;
 				ALUOp = 2'b00;
@@ -26,6 +27,7 @@ module MainDecoder
 				ImmSrc = 2'b01;
 				ALUSrc = 1'b1;
 				MemWrite = 1'b1;
+				MemRead = 1'b0;
 				ResultSrc = 2'b00;
 				Branch = 1'b0;
 				ALUOp = 2'b00;
@@ -38,6 +40,7 @@ module MainDecoder
 				ImmSrc = 2'b00;
 				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
+				MemRead = 1'b0;
 				ResultSrc = 2'b00;
 				Branch = 1'b0;
 				ALUOp = 2'b10;
@@ -50,6 +53,7 @@ module MainDecoder
 				ImmSrc = 2'b10;
 				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
+				MemRead = 1'b0;
 				ResultSrc = 2'b00;
 				Branch = 1'b1;
 				ALUOp = 2'b01;
@@ -62,6 +66,7 @@ module MainDecoder
 				ImmSrc = 2'b00;
 				ALUSrc = 1'b1;
 				MemWrite = 1'b0;
+				MemRead = 1'b0;
 				ResultSrc = 2'b00;
 				Branch = 1'b0;
 				ALUOp = 2'b10;
@@ -74,6 +79,7 @@ module MainDecoder
 				ImmSrc = 2'b11;
 				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
+				MemRead = 1'b0;
 				ResultSrc = 2'b10;
 				Branch = 1'b0;
 				ALUOp = 2'b00;
@@ -86,6 +92,7 @@ module MainDecoder
 				ImmSrc = 2'b00;
 				ALUSrc = 1'b1;
 				MemWrite = 1'b0;
+				MemRead = 1'b0;
 				ResultSrc = 2'b10;
 				Branch = 1'b0;
 				ALUOp = 2'b00;
@@ -98,6 +105,7 @@ module MainDecoder
 				ImmSrc = 2'b00;
 				ALUSrc = 1'b0;
 				MemWrite = 1'b0;
+				MemRead = 1'b0;
 				ResultSrc = 2'b00;
 				Branch = 1'b0;
 				ALUOp = 2'b00;

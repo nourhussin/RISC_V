@@ -9,7 +9,7 @@ module test_with_RAM;
     assign clk = clk_tb;
     assign reset_n = reset_n_tb;
 
-    wire MemWrite;
+    wire MemWrite, MemRead;
     wire[31:0] Instr, PC, DataAdr, WriteData, ReadData;
 
     top_module Processor(
@@ -18,6 +18,7 @@ module test_with_RAM;
         .Instr(Instr),
         .ReadData(ReadData),
         .MemWrite(MemWrite),
+        .MemRead(MemRead),
         .PC(PC),
         .ALUResult(DataAdr),
         .WriteData(WriteData)
@@ -25,8 +26,9 @@ module test_with_RAM;
 
     data_memory RAM(
         .clk(clk),
-        .A(DataAdr[6:0]),
+        .A(DataAdr[9:0]),
         .WE(MemWrite),
+        .RE(MemRead),
         .WD(WriteData),
         .RD(ReadData)
     );

@@ -6,7 +6,7 @@ module ControlUnit
 	input wire [2:0] funct3,                   //connected with Instr [14:12] in the top
 	input wire funct7_5,                       //connected with Instr [30] in the top
 	input wire Zero,                               //output from ALU module 
-	output wire MemWrite,ALUSrc,RegWrite,
+	output wire MemWrite,MemRead,ALUSrc,RegWrite,
 	output wire [1:0] ImmSrc,ResultSrc,PCSrc,
 	output wire [2:0] ALUControl
 );
@@ -20,6 +20,7 @@ module ControlUnit
 	.Branch(Branch),
 	.Jump(Jump),
 	.MemWrite(MemWrite),
+	.MemRead(MemRead),
 	.ALUSrc(ALUSrc),
 	.RegWrite(RegWrite),
 	.ImmSrc(ImmSrc),
