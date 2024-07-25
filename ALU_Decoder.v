@@ -18,7 +18,7 @@ casex (ALUOp)
 	casex (funct3)
 		3'b000: ALUControl = 3'b001;///beq
 		3'b001: ALUControl = 3'b001;///bne
-		default : ALUControl = 3'bxxx;
+		default : ALUControl = 3'b000;
 	endcase
 	end
 	
@@ -33,13 +33,13 @@ casex (ALUOp)
 					ALUControl=3'b000;//add,addi
 			end
 			
-			//3'b010:ALUControl=3'b101;//slt not required
+			3'b010:ALUControl=3'b101;//slt 
 			3'b110:ALUControl=3'b011;//or,ori
 			3'b111:ALUControl=3'b010;//and,andi
-			default:ALUControl=3'bxxx;
+			default:ALUControl=3'b000;
 		endcase
 	end
-	default:ALUControl=3'bxxx;
+	default:ALUControl=3'b000;
 endcase
 
 end

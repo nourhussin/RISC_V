@@ -1,14 +1,9 @@
-module MainDecoder
-(
+module MainDecoder(
 	input wire [6:0] op,
-<<<<<<< HEAD
+
 	output reg Branch,MemWrite,MemRead,ALUSrc,RegWrite,
-	output reg [1:0] ImmSrc,ALUOp,ResultSrc,Jump
-=======
-	output reg Branch,MemWrite,ALUSrc,RegWrite,
 	output reg [1:0] ImmSrc,ALUOp,ResultSrc,
 	output reg [1:0] Jump                     //input for a mux which decide it's a (PCTarget) or a (jump address) or (PC + 4)
->>>>>>> a2a3c89907f3e265ad00354540033060a5f979d4
 );
 
 	always @(*)
@@ -63,7 +58,7 @@ module MainDecoder
 				ResultSrc = 2'b00;
 				Branch = 1'b1;
 				ALUOp = 2'b01;
-				Jump = 2'b01;                         //Jump to (PCTarget)
+				Jump = 2'b00;                         //No jump instruction it is branching
 			end
 			
 			7'b0010011:                             //I-type ALU instruction

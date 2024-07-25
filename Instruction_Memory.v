@@ -18,6 +18,8 @@ module Instruction_Memory#(parameter depth = 256, width = 32)(
         memory[4] = 32'h0041f2b3;	//and x5 x3 x4	 x5 = (12 AND 7) = 4        10          0041F2B3
         memory[5] = 32'h004282b3;	//add x5 x5 x4	 x5 = 4 + 7 = 11            14          004282B3
         memory[6] = 32'h02728863;	//beq x5 x7 48	 shouldn't be taken         18          02728863
+      //memory[6] = 32'h02729863;  // bne x5 x7 48  should be taken             48          02729863
+      // bne is tested and it works fine :)
         memory[7] = 32'h0041a233;	//slt x4 x3 x4	 x4 = (12 < 7) = 0          1C          0041A233
         memory[8] = 32'h00020463;	//beq x4 x0 8	 should be taken            20          00020463
         memory[9] = 32'h00000293;	//addi x5 x0 0	 shouldn't execute          24          00000293
