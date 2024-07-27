@@ -1,8 +1,8 @@
 module main_memory (clk,reset,add,write_data,mem_read,mem_write,read_data,ready);
 
-parameter add_width = 12;
+parameter add_width = 10;
 parameter data_width = 32;
-parameter mem_depth = 4096;
+parameter mem_depth = 1024;
 
 input clk,reset,mem_read,mem_write;
 input [add_width-1:0] add;
