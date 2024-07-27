@@ -34,8 +34,8 @@ module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, 
             stall <= 1'b0;
             data_out <= 0;
         end 
-		  else 
-		  begin
+        else 
+	begin
             current_state <= next_state;
         end
     end
@@ -45,42 +45,44 @@ module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, 
 	 begin
         case (current_state)
             idle: 
-				begin
+	    begin
                 stall = 1'b0;
-                if (wr_en) begin
-                    if (hit_miss) begin
+                if (wr_en) 
+		begin
+                    if (hit_miss) 
+		    begin
                         stall = 1'b1;
                         next_state = write_through;
                     end 
-						  else 
-						  begin
+		    else 
+		    begin
                         stall = 1'b1;
                         next_state = write_around;
                     end
                 end 
-					 else if (rd_en) 
-					 begin
+		else if (rd_en) 
+		begin
                     if (hit_miss) 
-						  begin
+		    begin
                         data_out = cache[index]; 
                         next_state = idle;
                     end 
-						  else
-						  begin
+		    else
+		    begin
                         stall = 1'b1;
                         next_state = read;
                     end
                 end 
-					 else 
-					 begin
+		else 
+		begin
                     next_state = idle;
                 end
             end
 
             write_through: 
-				begin
+	    begin
                 if (ready) 
-					 begin
+		begin
                     cache[index] = data_in; 
                     tag[index] = tag_value; 
                     valid[index] = 1'b1; 
@@ -88,41 +90,42 @@ module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, 
                     stall = 1'b0;
                     next_state = idle;
                 end 
-					 else 
-					 begin
+		else 
+		begin
                     next_state = write_through;
                 end
             end
 
             write_around: 
-				begin
+	    begin
                 if (ready) 
-					 begin
+		begin
                     mem[address] = data_in; // Write data to memory
                     stall = 1'b0;
                     next_state = idle;
                 end 
-					 else 
-					 begin
+		else 
+		begin
                     next_state = write_around;
                 end
             end
 
-            read: begin
+            read: 
+	    begin
                 if (ready) 
-					 begin
+	        begin
                     data_out = mem[address]; // Read data from memory
                     stall = 1'b0;
                     next_state = idle;
                 end 
-					 else 
-					 begin
+		else 
+		begin
                     next_state = read;
                 end
             end
 
             default: 
-				begin
+	    begin
                 stall = 1'b0;
                 data_out = 0;
                 next_state = idle;
