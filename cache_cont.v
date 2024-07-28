@@ -1,15 +1,21 @@
-module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, memory_depth=1024)
+module cache_cont #(parameter cache_depth=32)
 (
     input wire clk,
     input wire reset_n,
-    input wire rd_en,         // Read enable
-    input wire wr_en,         // Write enable
-	 input wire hit_miss,
-    output reg stall,         // Stall signal
-    input wire ready        // Ready signal from data memory
+    input wire rd_en,                        // Read enable
+    input wire wr_en,                        // Write enable
+    output reg stall,                         // Stall signal
+    input wire ready,                        // Ready signal from data memory
+	 input wire [9:0] address,
+	 output reg read_en,write_en              //outputs to the mem
 );
     
-    
+    reg [2:0] tag_v [cache_depth-1:0];
+	 reg [4:0] index_v [cache_depth-1:0];
+	 
+	 wire hit_miss;
+	 assign hit_miss = (tag_v[address [6:2]] == address [9:7]) ? 1'b1 : 1'b0;
+	 
     reg [1:0] next_state, current_state;
     parameter [1:0] idle = 2'b00, write_through = 2'b01, write_around = 2'b10, read = 2'b11;
     
@@ -69,12 +75,14 @@ module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, 
 				begin
                 if (ready) 
 					 begin 
+						  write_en = 1'b1;
                     stall = 1'b0;
                     next_state = idle;
                 end 
 					 else 
 					 begin
                     next_state = write_through;
+						  write_en = 1'b0;
                 end
             end
 
@@ -82,12 +90,14 @@ module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, 
 				begin
                 if (ready) 
 					 begin
+					     write_en = 1'b1;
                     stall = 1'b0;
                     next_state = idle;
                 end 
 					 else 
 					 begin
                     next_state = write_around;
+						  write_en = 1'b0;
                 end
             end
 
@@ -95,20 +105,26 @@ module cache_cont #(parameter cache_width=128, cache_depth=32, memory_width=32, 
                 if (ready) 
 					 begin
                     stall = 1'b0;
+						  read_en = 1'b1;
                     next_state = idle;
                 end 
 					 else 
 					 begin
                     next_state = read;
+						  read_en = 1'b0;
                 end
             end
 
             default: 
 				begin
                 stall = 1'b0;
+					 write_en = 1'b0;
+					 read_en = 1'b0;
                 next_state = idle;
             end
         endcase
     end
 
+	 
 endmodule
+
