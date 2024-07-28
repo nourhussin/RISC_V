@@ -21,7 +21,7 @@ module cache_memory #(parameter cache_width=128,
     reg [cache_width-1 : 0] cache_mem [cache_depth-1 : 0];
 
     reg [2:0] tag_array [cache_depth-1 : 0];   
-    reg valid_array [cache_depth-1 : 0]; 
+    reg [cache_depth-1 : 0] valid_array; 
 
     assign hit = valid_array[index] & (tag_array[index] == tag);
     assign read_cache_line = cache_mem[index];
@@ -55,7 +55,7 @@ module cache_memory #(parameter cache_width=128,
     always @(posedge clk, negedge reset_n)
     begin
         if(!reset_n)
-            valid_array <= 0
+            valid_array <= 32'b0000;
         else
         begin
             if(refill)
