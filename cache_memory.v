@@ -3,12 +3,16 @@ module cache_memory #(parameter cache_width=128,
                                 memory_width=32, 
                                 memory_depth=1024)(
 
-    input wire clk, refill, update,
+// Combinational Read and Sequential Write
+
+    input wire clk, reset_n, refill, update,
     input wire[1:0] offset,
     input wire[4:0] index,
+    input wire[2:0] tag,
     input wire[cache_width-1:0] line_data,   
     input wire[memory_width-1 :0] write_data,
 
+    output wire hit,
     output reg[memory_width-1:0] read_data
     );
 
@@ -16,7 +20,10 @@ module cache_memory #(parameter cache_width=128,
     reg [cache_width-1 : 0] write_cache_line;
     reg [cache_width-1 : 0] cache_mem [cache_depth-1 : 0];
 
+    reg [2:0] tag_array [cache_depth-1 : 0];   
+    reg valid_array [cache_depth-1 : 0]; 
 
+    assign hit = valid_array[index] & (tag_array[index] == tag);
     assign read_cache_line = cache_mem[index];
     always @(*)
     begin
@@ -45,12 +52,20 @@ module cache_memory #(parameter cache_width=128,
         endcase
     end
 
-    always @(posedge clk)
+    always @(posedge clk, negedge reset_n)
     begin
-        if(refill)
-            cache_mem[index] <= line_data;
-        else if(update)
-            cache_mem[index] <= write_cache_line;
-
+        if(!reset_n)
+            valid_array <= 0
+        else
+        begin
+            if(refill)
+            begin
+                cache_mem[index] <= line_data;
+                valid_array[index] <= 1;
+                tag_array[index] <= tag;
+            end
+            else if(update)
+                cache_mem[index] <= write_cache_line;
+        end
     end
 endmodule
