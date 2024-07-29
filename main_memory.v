@@ -8,7 +8,7 @@ input clk,mem_read,mem_write;
 input [add_width-1:0] add;
 input [data_width-1:0] write_data;
 
-output reg [data_width-1:0] read_data;
+output reg [(4*data_width)-1:0] read_data;
 output reg ready_to_read, finished_writing;
 
 reg [data_width-1:0] mem [0:mem_depth-1];
@@ -25,7 +25,7 @@ begin
 
    else if (mem_read) 
    begin         
-      read_data <= mem[add]; 
+      read_data <= {mem[{add[9:2], 2'b11}], mem[{add[9:2], 2'b10}], mem[{add[9:2], 2'b01}], mem[{add[9:2], 2'b00}]}; 
       counter = counter + 1;
       ready_to_read = (counter == 2'b11)? 1 : 0;
    end
