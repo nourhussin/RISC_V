@@ -2,13 +2,14 @@
 `include "ALU.v"
 `include "mux.v"
 `include "mux3.v"
+`include "mux2.v"
 `include "PC.v"
 `include "PCTarget.v"
 `include "sign_extension.v"
 `include "Register_File.v"
 
 module Datapath #(parameter width = 32)(
-    input wire clk, reset_n, ALUSrc, RegWrite, // we may need to add 1 bit in RegWrite
+    input wire clk, reset_n, ALUSrc, RegWrite, stall,
     input wire [1 : 0] ResultSrc, ImmSrc, PCSrc,
     input wire [2 : 0] ALUControl,
     input wire [width-1 : 0] Instr, ReadData,
@@ -17,7 +18,7 @@ module Datapath #(parameter width = 32)(
     output wire [width-1 : 0] PC, ALUResult, WriteData
     );
 
-    wire [width-1 : 0] PCNext, PCPlus4, PCTarget, ImmExt, SrcA, SrcB, Result;
+    wire [width-1 : 0] PCNext, PCPlus4, PCTarget, PCstall, ImmExt, SrcA, SrcB, Result;
 
     //--------------------PC----------------------------
     PC pcreg (
@@ -40,6 +41,12 @@ module Datapath #(parameter width = 32)(
         .data2(PCTarget),
         .data3(ALUResult),
         .selector(PCSrc),
+        .out_data(PCstall)
+    );
+    mux2 freeze(
+        .data1(PCstall),
+        .data2(PC),
+        .selector(stall),
         .out_data(PCNext)
     );
 

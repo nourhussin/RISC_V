@@ -19,15 +19,15 @@ begin
    if (mem_write)
    begin          
       mem[add] <= write_data;
-      counter = counter + 1;
-      finished_writing = (counter == 2'b11)? 1 : 0;
+      finished_writing <= (counter == 2'b11)? 1 : 0;
+      counter <= counter + 1;
    end
 
    else if (mem_read) 
    begin         
       read_data <= {mem[{add[9:2], 2'b11}], mem[{add[9:2], 2'b10}], mem[{add[9:2], 2'b01}], mem[{add[9:2], 2'b00}]}; 
-      counter = counter + 1;
-      ready_to_read = (counter == 2'b11)? 1 : 0;
+      ready_to_read <= (counter == 2'b11)? 1 : 0;
+      counter <= counter + 1;  
    end
 end
 endmodule

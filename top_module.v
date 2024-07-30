@@ -2,7 +2,7 @@
 `include "ControlUnit.v"
 
 module top_module #(parameter width = 32)(
-    input wire clk, reset_n,
+    input wire clk, reset_n, stall,
     input wire [width-1 : 0] Instr, ReadData,
 
     output wire MemWrite,MemRead,
@@ -32,6 +32,7 @@ module top_module #(parameter width = 32)(
     Datapath DP(
         .clk(clk),    
         .reset_n(reset_n),
+        .stall(stall),
         .PCSrc(PCSrc),
         .ALUSrc(ALUSrc),
         .RegWrite(RegWrite),

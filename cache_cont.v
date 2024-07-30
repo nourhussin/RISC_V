@@ -39,6 +39,8 @@ begin
 
         else if (rd_en & (!hit)) 
             next_state = read;
+        else
+            next_state = idle;
     end
 
     write: 
@@ -49,6 +51,8 @@ begin
 
         if(finished_writing) 
             next_state = idle; 
+        else
+            next_state = write;
     end
 
     read: 
@@ -59,6 +63,8 @@ begin
 
         if(ready_to_read) 
             next_state = idle;
+        else
+            next_state = read;
     end
     endcase
 end	 
