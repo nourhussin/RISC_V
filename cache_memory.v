@@ -5,7 +5,7 @@ module cache_memory #(parameter cache_width=128,
 
 // Combinational Read and Sequential Write
 
-    input wire clk, reset_n, refill, update,
+    input wire clk, reset_n, refill, update, RE,
     input wire[1:0] offset,
     input wire[4:0] index,
     input wire[2:0] tag,
@@ -30,23 +30,23 @@ module cache_memory #(parameter cache_width=128,
         case (offset)
         2'b00:
         begin
-            read_data = read_cache_line[31:0];
+            read_data = RE? read_cache_line[31:0] : 0;
             write_cache_line = {read_cache_line[127:32], write_data};
         end
         2'b01:
         begin
-            read_data = read_cache_line[63:32];
+            read_data = RE? read_cache_line[63:32] : 0;
             write_cache_line = {read_cache_line[127:64], write_data, read_cache_line[31:0]};
 
         end
         2'b10:
         begin
-            read_data = read_cache_line[95:64];
+            read_data = RE? read_cache_line[95:64] : 0;
             write_cache_line = {read_cache_line[127:96], write_data, read_cache_line[63:0]};
         end
         2'b11:
         begin
-            read_data = read_cache_line[127:96];
+            read_data = RE? read_cache_line[127:96] : 0;
             write_cache_line = {write_data, read_cache_line[95:0]};
         end
         endcase

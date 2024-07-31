@@ -42,6 +42,7 @@ module memory_system #(parameter memory_width = 32, memory_depth = 1024)(
     cache_memory CACHE(
         .clk(clk),
         .reset_n(reset_n),
+        .RE(RE),
         .refill(refill),
         .update(update),
         .offset(A[1:0]),
