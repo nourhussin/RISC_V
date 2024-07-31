@@ -10,7 +10,26 @@ module Instruction_Memory#(parameter depth = 256, width = 32)(
     assign RD = memory[A];
     // Upload the program code here
      
-    initial begin/*
+    initial begin
+
+    memory[0] = 32'h00700093;  // addi x1, x0, 7         // Address: 0x0000
+	memory[1] = 32'h00100113;  // addi x2, x0, 1         // Address: 0x0004
+	memory[2] = 32'h00100193;  // addi x3, x0, 1         // Address: 0x0008
+	memory[3] = 32'h00000013;  // addi x4, x0, 0         // Address: 0x000C
+	memory[4] = 32'h00000013;  // addi x5, x0, 0         // Address: 0x0010
+	memory[5] = 32'h00310063;  // beq x2, x3, end_loop   // Address: 0x0014 (jumps to 0x0038)
+	memory[6] = 32'h00000013;  // addi x4, x0, 0         // Address: 0x0018 (initialize x4 to 0, multiply_loop)
+	memory[7] = 32'h006300e3;  // beq x4, x3, add_done   // Address: 0x001C (jumps to 0x002C)
+	memory[8] = 32'h00528133;  // add x2, x2, x5         // Address: 0x0020
+	memory[9] = 32'h00118193;  // addi x3, x3, 1         // Address: 0x0024
+	memory[10] = 32'hff5ff06f; // jal x0, multiply_loop  // Address: 0x0028 (jumps to 0x0018)
+	memory[11] = 32'h00318093; // addi x1, x1, 1         // Address: 0x002C (add_done)
+	memory[12] = 32'hffcff06f; // jal x0, factorial_loop // Address: 0x0030 (jumps to 0x0014)
+	memory[13] = 32'h00002023; // sw x2, 0(x0)           // Address: 0x0034
+	memory[14] = 32'h00000013; // NOP                    // Address: 0x0038 (end_loop, if required)
+
+
+        /*
         memory[0] = 32'h00500113;	//addi x2 x0 5	 x2 = 5                     0           00500113
         memory[1] = 32'h00c00193;	//addi x3 x0 12	 x3 = 12                    4           00C00193
         memory[2] = 32'hff718393;	//addi x7 x3 -9	 x7 = (12 - 9) = 3          8           FF718393

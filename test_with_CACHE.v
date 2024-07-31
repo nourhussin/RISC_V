@@ -52,6 +52,10 @@ module test_with_CACHE;
 
         reset_n_tb = 1;
         #(30*T);
+
+        #1000
+        $stop;
+        
     end
 
 endmodule
