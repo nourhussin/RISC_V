@@ -1,6 +1,5 @@
 `include "Add4.v"
 `include "ALU.v"
-`include "mux.v"
 `include "mux3.v"
 `include "mux2.v"
 `include "PC.v"
@@ -68,7 +67,7 @@ module Datapath #(parameter width = 32)(
     );
 
     //----------------------ALU-------------------------
-    mux alu_src (
+    mux2 alu_src (
         .data1(WriteData),
         .data2(ImmExt),
         .selector(ALUSrc),
